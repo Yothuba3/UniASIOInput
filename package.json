@@ -1,6 +1,6 @@
 {
     "name": "com.yothuba.asio",
-    "version": "0.9.0",
+    "version": "1.0.0",
     "displayName": "UniASIOinput",
     "description": "This asset enables Asio to be handled in Unity. It is low-latency and can accept multiple inputs from a single audio interface.",
     "keywords": [
