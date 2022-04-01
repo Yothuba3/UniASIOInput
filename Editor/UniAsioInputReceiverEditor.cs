@@ -14,8 +14,7 @@ namespace Yothuba.Asio.Editor
     public class UniAsioInputReceiverEditor : UnityEditor.Editor
     {
         AutoProperty asioManager;
-        AutoProperty channelIndex; 
-        AutoProperty cube;
+        AutoProperty channelIndex;
         AutoProperty OnUniAsioInputEvent;
         private string[] names;
         private string channelName;
@@ -69,8 +68,7 @@ namespace Yothuba.Asio.Editor
                     ShowChannelNameDropdown(rect);
                 }
             }
-           EditorGUILayout.PropertyField(cube);
-           EditorGUILayout.PropertyField(OnUniAsioInputEvent);
+            EditorGUILayout.PropertyField(OnUniAsioInputEvent);
             serializedObject.ApplyModifiedProperties();
         }
     }
