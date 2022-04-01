@@ -16,9 +16,8 @@ namespace Yothuba.Asio.Editor
         private AutoProperty driverName;
         private AutoProperty bufferSizePerCh;
         private AutoProperty sampleRate;
-        private AutoProperty chOffset;
-        private AutoProperty _inputChCount;
-        private AutoProperty _outputChCount;
+        private AutoProperty inputChCount;
+        private AutoProperty outputChCount;
 
         void OnEnable() => AutoProperty.Scan(this);
         
@@ -41,6 +40,14 @@ namespace Yothuba.Asio.Editor
             menu.DropDown(rect);
         }
 
+        
+        /// <summary>
+        /// getting asio driver parameters.
+        /// InputChannel count
+        /// outputChannel count
+        /// Input Channel names
+        /// </summary>
+        /// <param name="name">selected ASIOdriver name</param>
         void OnSelectName(object name)
         {
             AsioManager asio = target as AsioManager;
@@ -49,20 +56,22 @@ namespace Yothuba.Asio.Editor
             
             driverName.Target.stringValue = (string) name;
            
-            var driver = AsioDriver.GetAsioDriverByName((driverName.Target.stringValue));
+            var driver = AsioDriver.GetAsioDriverByName(driverName.Target.stringValue);
             
-            int inNum, outNum;
-            driver.GetChannels(out inNum, out outNum);
-            _inputChCount.Target.intValue = inNum;
-            _outputChCount.Target.intValue = outNum;
+            driver.GetChannels(out int inNum, out int outNum);
+            inputChCount.Target.intValue = inNum;
+            outputChCount.Target.intValue = outNum;
             serializedObject.ApplyModifiedProperties();
-            var names = new string[_inputChCount.Target.intValue];
             
-            for (int i = 0; i < _inputChCount.Target.intValue; i++)
+            var names = new string[inputChCount.Target.intValue];
+            for (int i = 0; i < inputChCount.Target.intValue; i++)
             { 
                 names[i] = driver.GetChannelInfo(i, false).name;
             }
             asio.nameOfChannels = names;
+            
+            driver.Stop();
+            driver.DisposeBuffers();
             driver.ReleaseComAsioDriver();
         }
         
@@ -91,7 +100,6 @@ namespace Yothuba.Asio.Editor
             }
             EditorGUI.indentLevel++;
             EditorGUILayout.PropertyField(bufferSizePerCh);
-            EditorGUILayout.PropertyField(chOffset);
             EditorGUILayout.PropertyField(sampleRate);
             serializedObject.ApplyModifiedProperties();
         }

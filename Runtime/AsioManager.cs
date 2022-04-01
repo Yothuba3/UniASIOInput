@@ -15,24 +15,19 @@ namespace Yothuba.Asio.Runtime
     public class AsioManager : MonoBehaviour
     {
         [SerializeField] internal string[] nameOfChannels;
-        
         [SerializeField] private string driverName;
         [SerializeField] private int bufferSizePerCh = 512;
         [SerializeField] private int sampleRate = 44100;
-        [SerializeField] private int chOffset = 0;
-        [SerializeField] private int _inputChCount = 0;
-        [SerializeField] private int _outputChCount = 0;
-        private AsioOut _asioOut;
-        private float[] _samples;
+        [SerializeField] private int inputChCount = 0;
+        [SerializeField] private int outputChCount = 0;
         
-        private IWaveProvider _provider;
-        private WaveProvider32 _waveProvider32;
+        private AsioOut _asioOut;
+
         
         public int BufferSizePerCh => bufferSizePerCh;
         public string DriverName => driverName;
-        public int InputChCount => _inputChCount;
-        public int OuputChCount => _outputChCount;
-        private int numberOfInput, numberOfOutput;
+        public int InputChCount => inputChCount;
+        public int OuputChCount => outputChCount;
         /// <summary>
         /// OnEnableより後にイベントを登録してください
         /// </summary>
@@ -40,17 +35,14 @@ namespace Yothuba.Asio.Runtime
 
         private void OnEnable()
         {
-            
         }
         
         void Start()
         {
             _asioOut = new AsioOut(driverName);
             
-            _inputChCount = _asioOut.DriverInputChannelCount;
-            _outputChCount = _asioOut.DriverOutputChannelCount;
-            _asioOut.InputChannelOffset = chOffset;
-            _asioOut.InitRecordAndPlayback(_waveProvider32, _inputChCount, sampleRate);
+            inputChCount = _asioOut.DriverInputChannelCount;
+            _asioOut.InitRecordAndPlayback(null, inputChCount, sampleRate);
             _asioOut.AudioAvailable += OnReceive;
             _asioOut.Play();
         }
@@ -66,13 +58,12 @@ namespace Yothuba.Asio.Runtime
             if (nameOfChannels == null && !EditorApplication.isPlaying)
             {
                 var driver = AsioDriver.GetAsioDriverByName(driverName);
-            
-                int inNum, outNum;
-                driver.GetChannels(out inNum, out outNum);
-                _inputChCount = inNum;
-                _outputChCount = outNum;
-                var names = new string[_inputChCount];
-                for (int i = 0; i < _inputChCount; i++)
+                
+                driver.GetChannels(out int inNum, out int outNum);
+                inputChCount = inNum;
+                outputChCount = outNum;
+                var names = new string[inputChCount];
+                for (int i = 0; i < inputChCount; i++)
                 {
                     names[i] = driver.GetChannelInfo(i,false).name;
                 }

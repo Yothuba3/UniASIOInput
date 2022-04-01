@@ -10,25 +10,27 @@ namespace Yothuba.Asio.Editor
 {
 
     
-    [CustomEditor(typeof(AsioAudioSync))]
-    public class AsioAudioSyncEditor : UnityEditor.Editor
+    [CustomEditor(typeof(UniAsioInputReceiver))]
+    public class UniAsioInputReceiverEditor : UnityEditor.Editor
     {
-        AutoProperty _asioDriver;
-        AutoProperty channelIndex;
-        AutoProperty channelName;
+        AutoProperty asioManager;
+        AutoProperty channelIndex; 
         AutoProperty cube;
+        AutoProperty OnUniAsioInputEvent;
         private string[] names;
+        private string channelName;
         void ShowChannelNameDropdown(Rect rect)
         {
-            var audioSync = target as AsioAudioSync;
+            var audioSync = target as UniAsioInputReceiver;
             var menu = new GenericMenu();
 
-            names = audioSync._asioDriver.GetInputChannelsName();
+            names = audioSync.asioManager.nameOfChannels;
             if (names.Any())
             {
                 for (int i = 0; i < names.Length; i++)
                 {
-                    menu.AddItem(new GUIContent(names[i]), false, OnSelectName,i);
+                    var name = names[i].Replace("/","\u2215");
+                    menu.AddItem(new GUIContent(name), false, OnSelectName,i);
                 }
             }
             else
@@ -43,7 +45,7 @@ namespace Yothuba.Asio.Editor
             serializedObject.Update();
             
             channelIndex.Target.intValue = (int)index;
-            channelName.Target.stringValue = names[channelIndex.Target.intValue];
+            channelName = names[channelIndex.Target.intValue];
             serializedObject.ApplyModifiedProperties();
         }
         void OnEnable() => AutoProperty.Scan(this);
@@ -51,26 +53,24 @@ namespace Yothuba.Asio.Editor
         
         public override void OnInspectorGUI()
         {
-            AsioAudioSync audioSync = target as AsioAudioSync;
+            UniAsioInputReceiver receiver = target as UniAsioInputReceiver;
             serializedObject.Update();
-            EditorGUILayout.PropertyField(_asioDriver);
+            EditorGUILayout.PropertyField(asioManager);
             serializedObject.ApplyModifiedProperties();
             serializedObject.Update();
-            if(audioSync._asioDriver is null) EditorGUILayout.HelpBox("AsioMangerを指定してください", MessageType.Error);
+            if(receiver.asioManager is null) EditorGUILayout.HelpBox("AsioMangerを指定してください", MessageType.Error);
             using(new EditorGUILayout.HorizontalScope())
             {
                 
-                EditorGUILayout.DelayedTextField(channelName, new GUIContent("ChannelName"));
-                var rect = EditorGUILayout.GetControlRect(false, GUILayout.Width(60));
+                EditorGUILayout.DelayedTextField("channelName", channelName);
+                var rect = EditorGUILayout.GetControlRect( GUILayout.Width(60));
                 if (EditorGUI.DropdownButton(rect, new GUIContent(), FocusType.Keyboard))
                 {
-                    if (!(audioSync is null))
-                    {
-                        ShowChannelNameDropdown(rect);
-                    }
+                    ShowChannelNameDropdown(rect);
                 }
             }
            EditorGUILayout.PropertyField(cube);
+           EditorGUILayout.PropertyField(OnUniAsioInputEvent);
             serializedObject.ApplyModifiedProperties();
         }
     }
