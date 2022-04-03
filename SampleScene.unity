@@ -449,7 +449,7 @@ MonoBehaviour:
   - VM-VAIO 8
   driverName: Voicemeeter AUX Virtual ASIO
   bufferSizePerCh: 512
-  sampleRate: 48000
+  sampleRate: 44100
   inputChCount: 8
   outputChCount: 8
 --- !u!4 &1122066333
@@ -479,7 +479,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   asioManager: {fileID: 1122066332}
-  channelIndex: 0
+  channelIndex: 1
   OnUniAsioInputEvent:
     m_PersistentCalls:
       m_Calls:
@@ -495,7 +495,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 1
-  cube: {fileID: 1105560760}
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UniAsioAudioSourceSync, UniAsioInput
+        m_MethodName: OnUniAsioInputevent
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: Yothuba.Asio.Runtime.UniAsioAudioSourceSync, Assembly-CSharp
+        m_MethodName: OnUniAsioInputevent
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
 --- !u!1 &1889217489
 GameObject:
   m_ObjectHideFlags: 0
