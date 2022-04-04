@@ -20,16 +20,39 @@ It supports multi-channel input from audio interfaces, which is not possible wit
 
 # How to Install
 本アセットは，PackageManagerを経由して提供されます．
+https://docs.unity3d.com/ja/2019.4/Manual/upm-ui-giturl.html  
+  
 This asset is provided via PackageManager.
 https://docs.unity3d.com/ja/2019.4/Manual/upm-ui-giturl.html
 
 # How to Use  
-## Class  
-- ASIOManager
-  - Asioドライバを指定することで後述のUniAsioReceiverで利用可能になります．By specifying the Asio driver, it can be used with UniAsioReceiver described below.
-  - Buffer Size Per Ch，Samplerateは利用するAsioドライバの設定と合わせてください．Buffer Size Per Ch and Samplerate should be set according to the Asio driver settings used.
+## step1 
+任意のゲームオブジェクトに`AsioManager`をアタッチします．
+- ### **ASIOManager**
+  - Asioドライバを指定することで後述のUniAsioReceiverで利用可能になります．  
+    By specifying the Asio driver, it can be used with UniAsioReceiver described below.  
+  ### **Variables**  
+  - **BufferSize/Ch** : チャンネルごとのバッファーサイズです．ドライバ選択時に自動設定されますが，手動での書き換えも可能です．  
+ Buffer size for each channel. This is automatically set when the driver is selected, but can also be rewritten manually.
+  - **SampleRate** : ドライバのサンプルレートです．ドライバ選択時に自動設定されますが，手動での書き換えも可能です．  
+  The sample rate of the driver. It is automatically set when the driver is selected, but can also be rewritten manually.
   - ![image](https://user-images.githubusercontent.com/39334911/161339731-73a8d66b-76fe-4d98-9cf1-01b0984299d8.png)
 
-- UniAsioReceiver
-  - Asioドライバから指定したチャンネルのインプットを取得します．Obtains inputs for a specified channel from the Asio driver.
-  - 取得される値は時間軸的なオーディオデータであり，-1~1の範囲になっています．The value retrieved is the time-based audio data, ranging from -1 to 1.
+## step2
+任意のゲームオブジェクトに`UniAsioInputReceiver`をアタッチします．
+- ### **UniAsioInputReceiver**
+  - Asioドライバから指定したチャンネルのインプットを取得します．取得される値は時間軸的なオーディオデータであり，-1~1の範囲になっています．  
+  Obtains inputs for a specified channel from the Asio driver.
+  The value retrieved is the time-based audio data, ranging from -1 to 1.
+
+  ### **Variables**
+  - **AsioManager** : Step1で作成したAsioManagerを指定します．  
+  Specify the AsioManager created in Step 1.
+  - **Channelname** : 取得したいInputを選択します．    
+  Select the input you wish to retrieve.
+  ### **Event**
+  - **OnUniAsioInputEvent(float[])** :  
+    flaotの配列を引数にとるメソッドを指定できます．
+    配列にはstep1で指定したBufferSize分のオーディオデータが格納されます．  
+    You can specify a method that takes a flaot array as an argument.
+    The array stores audio data for the BufferSize specified in step1.
