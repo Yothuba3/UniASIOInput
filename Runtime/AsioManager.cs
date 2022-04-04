@@ -52,8 +52,13 @@ namespace Yothuba.Asio.Runtime
             _asioOut?.Stop();
             _asioOut?.Dispose();
         }
+
+        public void InitDriverConfig(AsioOut driver)
+        {
+            //driver.
+        }
         
-        public string[]  GetInputChannelsName()
+        internal string[]  GetInputChannelsName()
         {
             if (nameOfChannels == null && !EditorApplication.isPlaying)
             {
@@ -74,4 +79,5 @@ namespace Yothuba.Asio.Runtime
             return nameOfChannels;
         }
     }
+    
 }

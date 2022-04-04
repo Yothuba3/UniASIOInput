@@ -61,6 +61,9 @@ namespace Yothuba.Asio.Editor
             driver.GetChannels(out int inNum, out int outNum);
             inputChCount.Target.intValue = inNum;
             outputChCount.Target.intValue = outNum;
+            driver.GetBufferSize(out _,out _,out int preferredSize, out _);
+            bufferSizePerCh.Target.intValue = preferredSize;
+            sampleRate.Target.intValue = (int)driver.GetSampleRate();
             serializedObject.ApplyModifiedProperties();
             
             var names = new string[inputChCount.Target.intValue];
@@ -99,7 +102,7 @@ namespace Yothuba.Asio.Editor
                 EditorGUILayout.HelpBox(new GUIContent("OutChCount: " + asioSample.OuputChCount));
             }
             EditorGUI.indentLevel++;
-            EditorGUILayout.PropertyField(bufferSizePerCh);
+            EditorGUILayout.PropertyField(bufferSizePerCh, new GUIContent("BufferSize/ch"));
             EditorGUILayout.PropertyField(sampleRate);
             serializedObject.ApplyModifiedProperties();
         }

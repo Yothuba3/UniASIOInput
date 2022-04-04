@@ -439,19 +439,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameOfChannels:
-  - VM-VAIO 1
-  - VM-VAIO 2
-  - VM-VAIO 3
-  - VM-VAIO 4
-  - VM-VAIO 5
-  - VM-VAIO 6
-  - VM-VAIO 7
-  - VM-VAIO 8
-  driverName: Voicemeeter AUX Virtual ASIO
-  bufferSizePerCh: 512
+  - Not Connected 1
+  - Not Connected 2
+  driverName: ASIO4ALL v2
+  bufferSizePerCh: 0
   sampleRate: 44100
-  inputChCount: 8
-  outputChCount: 8
+  inputChCount: 2
+  outputChCount: 2
 --- !u!4 &1122066333
 Transform:
   m_ObjectHideFlags: 0
