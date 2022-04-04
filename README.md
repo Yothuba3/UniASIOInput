@@ -43,8 +43,8 @@ https://docs.unity3d.com/ja/2019.4/Manual/upm-ui-giturl.html
 - ### **UniAsioInputReceiver**
   - Asioドライバから指定したチャンネルのインプットを取得します．取得される値は時間軸的なオーディオデータであり，-1~1の範囲になっています．  
   Obtains inputs for a specified channel from the Asio driver.
-  The value retrieved is the time-based audio data, ranging from -1 to 1.
-
+  The value retrieved is the time-based audio data, ranging from -1 to 1.  
+  ![image](https://user-images.githubusercontent.com/39334911/161649941-f5b1f0e8-5f3e-479e-aacc-6865254d5b2e.png)
   ### **Variables**
   - **AsioManager** : Step1で作成したAsioManagerを指定します．  
   Specify the AsioManager created in Step 1.
@@ -55,4 +55,4 @@ https://docs.unity3d.com/ja/2019.4/Manual/upm-ui-giturl.html
     flaotの配列を引数にとるメソッドを指定できます．
     配列にはstep1で指定したBufferSize分のオーディオデータが格納されます．  
     You can specify a method that takes a flaot array as an argument.
-    The array stores audio data for the BufferSize specified in step1.
+    The array stores audio data for the BufferSize specified in step1.  
