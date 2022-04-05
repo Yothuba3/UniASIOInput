@@ -28,14 +28,11 @@ namespace Yothuba.Asio.Runtime
         public string DriverName => driverName;
         public int InputChCount => inputChCount;
         public int OuputChCount => outputChCount;
-        /// <summary>
-        /// OnEnableより後にイベントを登録してください
-        /// </summary>
-       public event EventHandler<AsioAudioAvailableEventArgs> OnReceive;
-
-        private void OnEnable()
-        {
-        }
+        
+        ///<summary>
+        ///Awake時に登録してください
+        ///</summary>
+        public event EventHandler<AsioAudioAvailableEventArgs> OnReceive;
         
         void Start()
         {
