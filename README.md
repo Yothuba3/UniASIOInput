@@ -54,5 +54,6 @@ https://docs.unity3d.com/ja/2019.4/Manual/upm-ui-giturl.html
   - **OnUniAsioInputEvent(float[], int)** :  
     flaotの配列を引数にとるメソッドを指定できます．
     配列にはstep1で指定したBufferSize分のオーディオデータが格納されます．  
+    intにはドライバのサンプリング周波数(Hz単位)が格納されます.
     You can specify a method that takes a flaot array as an argument.
     The array stores audio data for the BufferSize specified in step1.  
