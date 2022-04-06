@@ -51,7 +51,7 @@ https://docs.unity3d.com/ja/2019.4/Manual/upm-ui-giturl.html
   - **Channelname** : 取得したいInputを選択します．    
   Select the input you wish to retrieve.
   ### **Event**
-  - **OnUniAsioInputEvent(float[])** :  
+  - **OnUniAsioInputEvent(float[], int)** :  
     flaotの配列を引数にとるメソッドを指定できます．
     配列にはstep1で指定したBufferSize分のオーディオデータが格納されます．  
     You can specify a method that takes a flaot array as an argument.
