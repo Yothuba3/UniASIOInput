@@ -9,7 +9,6 @@ namespace Yothuba.Asio.Runtime
 {
     public class UniAsioFFTSample: MonoBehaviour
     {
-        private float[] spectrum = new float[512];
 
         // Start is called before the first frame update
         void Start()
@@ -23,15 +22,12 @@ namespace Yothuba.Asio.Runtime
 
         public void OnUniAsioInputevent(float[] buffer)
         {
-            //lineChart.RemoveData();
-   
-                float[] samples = new float[buffer.Length / 2];
-                samples = UniAsioUtility.FFT_NAudio(buffer);
-                for (int i = 0; i < samples.Length; i++)
-                {
+            float[] samples = new float[buffer.Length / 2];
+            samples = UniAsioUtility.FFT_NAudio(buffer);
+            for (int i = 0; i < samples.Length; i++)
+            {
 
-                }
-                
+            }
         }
     }
 }

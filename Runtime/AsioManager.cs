@@ -25,6 +25,7 @@ namespace Yothuba.Asio.Runtime
 
         
         public int BufferSizePerCh => bufferSizePerCh;
+        public int SampleRate => sampleRate;
         public string DriverName => driverName;
         public int InputChCount => inputChCount;
         public int OuputChCount => outputChCount;

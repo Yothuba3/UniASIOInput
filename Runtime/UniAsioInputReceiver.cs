@@ -15,9 +15,9 @@ public class UniAsioInputReceiver : MonoBehaviour
 
     [SerializeField] public AsioManager asioManager;
     [SerializeField] private int channelIndex;
-    [SerializeField] public UnityEvent<float[]> OnUniAsioInputEvent;
+    [SerializeField] public UnityEvent<float[], int> OnUniAsioInputEvent;
     ConcurrentQueue<float[]> queue = new ConcurrentQueue<float[]>();
-
+    private int sampleRate = 0;
     private void Awake()
     {
         if (!asioManager) return;
@@ -25,6 +25,10 @@ public class UniAsioInputReceiver : MonoBehaviour
         asioManager.OnReceive += OnAsioOutAudioAvailable;
     }
 
+    private void Start()
+    {
+        sampleRate = asioManager.SampleRate;
+    }
 
     private float[] _samples;
     private float[] _buffer;
@@ -52,7 +56,7 @@ public class UniAsioInputReceiver : MonoBehaviour
         {
             if (popBuffer.Sum() != 0)
             {
-                OnUniAsioInputEvent?.Invoke(popBuffer);
+                OnUniAsioInputEvent?.Invoke(popBuffer, sampleRate);
             }
         }
     }
