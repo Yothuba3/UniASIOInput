@@ -16,8 +16,9 @@ namespace Yothuba.Asio.Editor
         AutoProperty asioManager;
         AutoProperty channelIndex;
         AutoProperty OnUniAsioInputEvent;
+        AutoProperty channelName;
         private string[] names;
-        private string channelName;
+        
         void ShowChannelNameDropdown(Rect rect)
         {
             var audioSync = target as UniAsioInputReceiver;
@@ -44,7 +45,7 @@ namespace Yothuba.Asio.Editor
             serializedObject.Update();
             
             channelIndex.Target.intValue = (int)index;
-            channelName = names[channelIndex.Target.intValue];
+            channelName.Target.stringValue = names[channelIndex.Target.intValue];
             serializedObject.ApplyModifiedProperties();
         }
         void OnEnable() => AutoProperty.Scan(this);
@@ -61,7 +62,7 @@ namespace Yothuba.Asio.Editor
             using(new EditorGUILayout.HorizontalScope())
             {
                 
-                EditorGUILayout.DelayedTextField("channelName", channelName);
+                EditorGUILayout.DelayedTextField(channelName.Target);
                 var rect = EditorGUILayout.GetControlRect( GUILayout.Width(60));
                 if (EditorGUI.DropdownButton(rect, new GUIContent(), FocusType.Keyboard))
                 {

@@ -14,9 +14,10 @@ public class UniAsioInputReceiver : MonoBehaviour
 {
 
     [SerializeField] public AsioManager asioManager;
-    [SerializeField] private int channelIndex;
     [SerializeField] public UnityEvent<float[], int> OnUniAsioInputEvent;
-    ConcurrentQueue<float[]> queue = new ConcurrentQueue<float[]>();
+    [SerializeField] private int channelIndex;
+    [SerializeField] private string channelName;
+    private ConcurrentQueue<float[]> queue = new ConcurrentQueue<float[]>();
     private int sampleRate = 0;
     private void Awake()
     {
