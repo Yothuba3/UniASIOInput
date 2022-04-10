@@ -1,20 +1,33 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Yothuba.Asio.Runtime;
 
+enum BufferSize:uint
+{
+    Size256 = 256,
+    Size512 = 512,
+    Size1024 = 1024,
+    Size2048 = 2048,
+    Size4096 = 4096,
+    Size8192 = 8192,
+    Size44100 = 44100,
+    Size48000 = 48000
+}
 
 public class UniAsioAudioSourceBridge : MonoBehaviour
 {
     public AudioSource _AudioSource;
-
-    private int[] MaxBufferSize =
-    {
-        256, 512, 1024, 2048, 4096, 8192, 44100, 48000
-    };
-   
-    private const int MAX_BUFF_SIZE = 1024;
+    [SerializeField] private BufferSize _bufferSize;
+    private float[] audioSourceBuffer;
+    private int tmpBufferSize = 0;
     // Start is called before the first frame update
+    private void Awake()
+    {
+        audioSourceBuffer = new float[(uint)_bufferSize];
+    }
+
     void Start()
     {
         
@@ -25,9 +38,8 @@ public class UniAsioAudioSourceBridge : MonoBehaviour
     {
         
     }
-    
-    private float[] audioSourceBuffer = new float[MAX_BUFF_SIZE];
-    private int tmpBufferSize = 0;
+
+  
     public void OnUniAsioInputEvent(float[] buffer, int sampleRate)
     {
         /*
@@ -39,7 +51,7 @@ public class UniAsioAudioSourceBridge : MonoBehaviour
 */
         
         var tmp = tmpBufferSize;
-        if (tmp >= MAX_BUFF_SIZE)
+        if (tmp >= (uint)_bufferSize)
         {
             var clip = AudioClip.Create("clip",sampleRate,1,sampleRate, false);
             clip.SetData(audioSourceBuffer, 0);
@@ -51,7 +63,7 @@ public class UniAsioAudioSourceBridge : MonoBehaviour
         {
             for (int i = 0; i < buffer.Length; i++)
             {
-                if (tmp + i >= MAX_BUFF_SIZE) break;
+                if (tmp + i >= (uint)_bufferSize) break;
                 audioSourceBuffer[tmp + i] = buffer[i];
             }
             tmpBufferSize += buffer.Length;
